@@ -1,5 +1,17 @@
 var issueContainerEl = document.querySelector("#issues-container");
 var limitWarningEl = document.querySelector("#limit-warning");
+var repoNameEl = document.querySelector("#repo-name");
+
+var getRepoName = function(){
+    var queryString = document.location.search;
+    var repoName = queryString.split("=")[1];
+    if(repoName){
+        repoNameEl.textContent = repoName;
+        getRepoIssues(repoName);
+    } else {
+        document.location.replace("./index.html");
+      }
+};
 
 var getRepoIssues = function(repo) {
     console.log(repo);
@@ -15,10 +27,11 @@ var getRepoIssues = function(repo) {
             });
         }
         else {
-            alert("big oopsie!")
+            document.location.replace("./index.html")
         }
     })
 };
+
 
 var displayIssues = function(issues) {
     if(issues.length === 0) {
@@ -47,7 +60,7 @@ var displayIssues = function(issues) {
     }
    
     
-}
+};
 
 var displayWarning = function(repo) {
     limitWarningEl.textContent = "To see more than 30 issues, visit ";
@@ -59,4 +72,4 @@ var displayWarning = function(repo) {
     limitWarningEl.appendChild(linkEl);
 };
 
-getRepoIssues("facebook/react");
+getRepoName();
